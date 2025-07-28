@@ -3,219 +3,674 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Russian Roulette</title>
+    <title>Russian Roulette - Woody Retro</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #2c1810;
-            color: #d4c5b0;
-            text-align: center;
-            padding: 20px;
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Pirata+One&display=swap');
+        
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pirata One', cursive;
+            background: linear-gradient(135deg, #3c2415 0%, #5d4037 50%, #3c2415 100%);
+            background-size: 400% 400%;
+            animation: backgroundShift 8s ease-in-out infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #d7ccc8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .wood-grain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(139, 69, 19, 0.1) 0px,
+                    rgba(139, 69, 19, 0.2) 2px,
+                    rgba(139, 69, 19, 0.1) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(160, 82, 45, 0.05) 0px,
+                    rgba(160, 82, 45, 0.1) 1px,
+                    rgba(160, 82, 45, 0.05) 3px
+                );
+            pointer-events: none;
         }
 
         .game-container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: #3d2a1a;
-            border: 3px solid #8b6914;
-            border-radius: 15px;
-            padding: 30px;
+            text-align: center;
+            background: linear-gradient(145deg, #4e342e, #3e2723);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.5),
+                inset 0 2px 4px rgba(255,255,255,0.1);
+            border: 3px solid #8d6e63;
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            backdrop-filter: blur(10px);
         }
 
-        h1 {
-            color: #cc3333;
+        .game-title {
+            font-family: 'Nosifer', cursive;
+            font-size: 2.5rem;
+            color: #d32f2f;
+            text-shadow: 
+                3px 3px 0px #8d6e63,
+                6px 6px 10px rgba(0,0,0,0.8);
             margin-bottom: 30px;
-            font-size: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .revolver-container {
+            position: relative;
+            margin: 30px auto;
+            width: 300px;
+            height: 200px;
         }
 
         .revolver {
-            width: 150px;
-            height: 100px;
-            background: #654321;
-            border-radius: 10px;
-            margin: 20px auto;
+            width: 250px;
+            height: 150px;
+            background: linear-gradient(145deg, #6d4c41, #4e342e);
+            border-radius: 20px 60px 20px 40px;
             position: relative;
-            border: 2px solid #8b6914;
-        }
-
-        .cylinder {
-            width: 50px;
-            height: 50px;
-            background: #543a2a;
-            border-radius: 50%;
-            position: absolute;
-            top: 25px;
-            left: 50px;
-            border: 2px solid #8b6914;
-        }
-
-        .barrel {
-            width: 60px;
-            height: 20px;
-            background: #654321;
-            position: absolute;
-            top: 40px;
-            right: -10px;
-            border: 1px solid #8b6914;
-        }
-
-        .info {
-            margin: 20px 0;
-            font-size: 1.1rem;
-        }
-
-        .chamber-count {
-            color: #ffcc00;
-            font-weight: bold;
-        }
-
-        button {
-            font-size: 1.1rem;
-            padding: 12px 25px;
-            margin: 10px;
-            background: #654321;
-            color: #d4c5b0;
-            border: 2px solid #8b6914;
-            border-radius: 8px;
+            margin: 0 auto;
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.6),
+                inset 2px 2px 4px rgba(255,255,255,0.1);
+            border: 2px solid #5d4037;
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #8b6914;
+        .revolver:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 15px 30px rgba(0,0,0,0.8),
+                inset 2px 2px 4px rgba(255,255,255,0.2);
         }
 
-        button:disabled {
+        .cylinder {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #795548, #4e342e);
+            border-radius: 50%;
+            position: absolute;
+            top: 35px;
+            left: 85px;
+            border: 3px solid #6d4c41;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cylinder.spinning {
+            animation: spin 1s linear;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .chamber {
+            width: 12px;
+            height: 12px;
+            background: #3e2723;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid #8d6e63;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
+        }
+
+        .chamber:nth-child(1) { top: 10px; left: 34px; }
+        .chamber:nth-child(2) { top: 22px; right: 10px; }
+        .chamber:nth-child(3) { bottom: 22px; right: 10px; }
+        .chamber:nth-child(4) { bottom: 10px; left: 34px; }
+        .chamber:nth-child(5) { bottom: 22px; left: 10px; }
+        .chamber:nth-child(6) { top: 22px; left: 10px; }
+
+        .chamber.loaded {
+            background: linear-gradient(45deg, #ffd700, #ffb300);
+            box-shadow: 
+                inset 0 0 4px rgba(255,215,0,0.8),
+                0 0 8px rgba(255,215,0,0.6);
+            animation: bulletGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes bulletGlow {
+            from { box-shadow: inset 0 0 4px rgba(255,215,0,0.8), 0 0 8px rgba(255,215,0,0.6); }
+            to { box-shadow: inset 0 0 8px rgba(255,215,0,1), 0 0 15px rgba(255,215,0,0.8); }
+        }
+
+        .trigger {
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(145deg, #6d4c41, #4e342e);
+            border-radius: 15px;
+            position: absolute;
+            bottom: 20px;
+            left: 50px;
+            border: 1px solid #8d6e63;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .barrel {
+            width: 120px;
+            height: 25px;
+            background: linear-gradient(145deg, #5d4037, #3e2723);
+            border-radius: 0 12px 12px 0;
+            position: absolute;
+            top: 62px;
+            right: -5px;
+            border: 2px solid #6d4c41;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            background: rgba(62, 39, 35, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #8d6e63;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #bcaaa4;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d7ccc8;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .controls {
+            margin-top: 30px;
+        }
+
+        .btn {
+            font-family: 'Pirata One', cursive;
+            padding: 12px 30px;
+            margin: 0 10px;
+            background: linear-gradient(145deg, #8d6e63, #6d4c41);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            border: 2px solid #a1887f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+            background: linear-gradient(145deg, #a1887f, #8d6e63);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
         }
 
         .fire-btn {
-            background: #cc3333;
-            color: white;
-            font-weight: bold;
+            background: linear-gradient(145deg, #d32f2f, #b71c1c);
+            border-color: #f44336;
+            font-size: 1.3rem;
+            padding: 15px 40px;
+            animation: dangerPulse 2s ease-in-out infinite;
         }
 
-        .fire-btn:hover {
-            background: #aa2222;
+        @keyframes dangerPulse {
+            0%, 100% { box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+            50% { box-shadow: 0 6px 12px rgba(211, 47, 47, 0.6); }
         }
 
         .message {
-            margin: 20px 0;
+            margin-top: 20px;
             font-size: 1.2rem;
-            min-height: 30px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(62, 39, 35, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #8d6e63;
+        }
+
+        .game-over {
+            color: #f44336;
+            font-size: 1.5rem;
+            font-weight: bold;
+            animation: gameOverFlash 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes gameOverFlash {
+            from { color: #f44336; text-shadow: 0 0 10px #f44336; }
+            to { color: #d32f2f; text-shadow: 0 0 20px #d32f2f; }
         }
 
         .safe {
-            color: #44cc44;
-        }
-
-        .dead {
-            color: #cc3333;
+            color: #4caf50;
             font-weight: bold;
-            font-size: 1.4rem;
+            animation: safeGlow 0.5s ease-in-out;
         }
 
-        .stats {
-            margin-top: 20px;
-            padding: 15px;
-            background: #2c1810;
-            border-radius: 8px;
+        @keyframes safeGlow {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .muzzle-flash {
+            position: absolute;
+            top: 62px;
+            right: -30px;
+            width: 60px;
+            height: 25px;
+            background: radial-gradient(ellipse, #ffeb3b, #ff9800, transparent);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .muzzle-flash.active {
+            animation: muzzleFlash 0.3s ease-out;
+        }
+
+        @keyframes muzzleFlash {
+            0% { opacity: 1; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        .smoke {
+            position: absolute;
+            top: 60px;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(128,128,128,0.6), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .smoke.active {
+            animation: smoke 2s ease-out;
+        }
+
+        @keyframes smoke {
+            0% { opacity: 0.8; transform: scale(0) translateY(0); }
+            100% { opacity: 0; transform: scale(3) translateY(-50px); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title { font-size: 2rem; }
+            .revolver-container { width: 250px; height: 150px; }
+            .revolver { width: 200px; height: 120px; }
+            .cylinder { width: 60px; height: 60px; top: 30px; left: 70px; }
+            .barrel { width: 90px; height: 20px; top: 50px; }
+            .btn { padding: 10px 20px; margin: 5px; font-size: 1rem; }
+            .fire-btn { padding: 12px 25px; font-size: 1.1rem; }
         }
     </style>
 </head>
-<body>
+<body class="wood-grain">
     <div class="game-container">
-        <h1>Russian Roulette</h1>
+        <h1 class="game-title">RUSSIAN ROULETTE</h1>
         
-        <div class="revolver">
-            <div class="cylinder"></div>
-            <div class="barrel"></div>
+        <div class="revolver-container">
+            <div class="revolver" id="revolver">
+                <div class="cylinder" id="cylinder">
+                    <div class="chamber"></div>
+                    <div class="chamber"></div>
+                    <div class="chamber"></div>
+                    <div class="chamber"></div>
+                    <div class="chamber"></div>
+                    <div class="chamber"></div>
+                </div>
+                <div class="trigger"></div>
+                <div class="barrel"></div>
+                <div class="muzzle-flash" id="muzzleFlash"></div>
+                <div class="smoke" id="smoke"></div>
+            </div>
         </div>
 
-        <div class="info">
-            Chamber: <span class="chamber-count" id="chamber">1</span> / 6
+        <div class="game-stats">
+            <div class="stat">
+                <div class="stat-label">Round</div>
+                <div class="stat-value" id="round">1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Chambers Fired</div>
+                <div class="stat-value" id="chambersFired">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Survival Rate</div>
+                <div class="stat-value" id="survivalRate">100%</div>
+            </div>
         </div>
 
         <div class="message" id="message">
-            Click "Spin" to load the gun, then "Fire" to test your luck!
+            Click "SPIN CYLINDER" to load a bullet randomly, then pull the trigger...
         </div>
 
-        <button id="spinBtn" onclick="spin()">Spin Cylinder</button>
-        <button id="fireBtn" class="fire-btn" onclick="fire()" disabled>Fire!</button>
-        <button onclick="reset()">New Game</button>
-
-        <div class="stats">
-            <div>Shots Fired: <span id="shots">0</span></div>
-            <div>Games Played: <span id="games">0</span></div>
+        <div class="controls">
+            <button class="btn" id="spinBtn" onclick="spinCylinder()">SPIN CYLINDER</button>
+            <button class="btn fire-btn" id="fireBtn" onclick="pullTrigger()" disabled>PULL TRIGGER</button>
+            <button class="btn" id="resetBtn" onclick="resetGame()">NEW GAME</button>
         </div>
     </div>
 
     <script>
-        let bulletChamber = 0;
-        let currentChamber = 1;
-        let shotsFired = 0;
-        let gamesPlayed = 0;
-        let gameActive = false;
+        class RussianRouletteGame {
+            constructor() {
+                this.chambers = 6;
+                this.bulletPosition = -1;
+                this.currentChamber = 0;
+                this.round = 1;
+                this.chambersFired = 0;
+                this.totalRounds = 0;
+                this.gameOver = false;
+                this.audioContext = null;
+                this.initAudio();
+            }
 
-        function spin() {
-            // Randomly place bullet in one of 6 chambers
-            bulletChamber = Math.floor(Math.random() * 6) + 1;
-            currentChamber = 1;
-            gameActive = true;
-            
-            document.getElementById('spinBtn').disabled = true;
-            document.getElementById('fireBtn').disabled = false;
-            document.getElementById('chamber').textContent = currentChamber;
-            document.getElementById('message').textContent = 'Cylinder spun... Pull the trigger when ready.';
-        }
-
-        function fire() {
-            if (!gameActive) return;
-
-            if (currentChamber === bulletChamber) {
-                // Hit the bullet - game over
-                document.getElementById('message').innerHTML = '<div class="dead">💀 BANG! You\'re dead!</div>';
-                gameActive = false;
-                gamesPlayed++;
-                document.getElementById('spinBtn').disabled = false;
-                document.getElementById('fireBtn').disabled = true;
-            } else {
-                // Empty chamber - safe
-                document.getElementById('message').innerHTML = '<div class="safe">Click... You\'re safe!</div>';
-                currentChamber++;
-                
-                if (currentChamber > 6) {
-                    // Survived all chambers
-                    document.getElementById('message').innerHTML = '<div class="safe">🎉 You survived the round!</div>';
-                    gameActive = false;
-                    gamesPlayed++;
-                    document.getElementById('spinBtn').disabled = false;
-                    document.getElementById('fireBtn').disabled = true;
-                } else {
-                    document.getElementById('chamber').textContent = currentChamber;
+            initAudio() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.log('Audio not supported');
                 }
             }
-            
-            shotsFired++;
-            updateStats();
+
+            playSound(frequency, duration, type = 'sine') {
+                if (!this.audioContext) return;
+                
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+                
+                oscillator.start(this.audioContext.currentTime);
+                oscillator.stop(this.audioContext.currentTime + duration);
+            }
+
+            spinCylinder() {
+                if (this.gameOver) return;
+
+                // Visual spin effect
+                const cylinder = document.getElementById('cylinder');
+                cylinder.classList.add('spinning');
+                
+                // Spinning sound
+                this.playSound(200, 0.1, 'square');
+                setTimeout(() => this.playSound(180, 0.1, 'square'), 100);
+                setTimeout(() => this.playSound(160, 0.1, 'square'), 200);
+
+                // Randomly place bullet
+                this.bulletPosition = Math.floor(Math.random() * this.chambers);
+                this.currentChamber = 0;
+
+                // Clear previous bullet indicators
+                document.querySelectorAll('.chamber').forEach(chamber => {
+                    chamber.classList.remove('loaded');
+                });
+
+                setTimeout(() => {
+                    cylinder.classList.remove('spinning');
+                    
+                    // Show bullet position (for dramatic effect, remove in production for true randomness)
+                    // document.querySelectorAll('.chamber')[this.bulletPosition].classList.add('loaded');
+                    
+                    document.getElementById('fireBtn').disabled = false;
+                    document.getElementById('spinBtn').disabled = true;
+                    document.getElementById('message').innerHTML = 
+                        `Bullet loaded... Current chamber: <strong>${this.currentChamber + 1}</strong>/6<br>
+                        <em>Do you feel lucky?</em>`;
+                }, 600);
+            }
+
+            pullTrigger() {
+                if (this.gameOver) return;
+
+                const fireBtn = document.getElementById('fireBtn');
+                const message = document.getElementById('message');
+                const muzzleFlash = document.getElementById('muzzleFlash');
+                const smoke = document.getElementById('smoke');
+
+                fireBtn.disabled = true;
+
+                // Trigger click sound
+                this.playSound(800, 0.1, 'square');
+
+                setTimeout(() => {
+                    if (this.currentChamber === this.bulletPosition) {
+                        // BANG! Game Over
+                        this.playSound(150, 1, 'sawtooth'); // Gunshot sound
+                        
+                        muzzleFlash.classList.add('active');
+                        smoke.classList.add('active');
+                        
+                        setTimeout(() => {
+                            muzzleFlash.classList.remove('active');
+                            smoke.classList.remove('active');
+                        }, 2000);
+
+                        message.innerHTML = '<div class="game-over">💀 BANG! YOU\'RE DEAD! 💀</div>';
+                        this.gameOver = true;
+                        
+                        document.getElementById('spinBtn').disabled = true;
+                        document.getElementById('resetBtn').style.background = 'linear-gradient(145deg, #4caf50, #388e3c)';
+                        
+                    } else {
+                        // Click - Safe
+                        this.playSound(600, 0.2, 'square'); // Empty chamber click
+                        
+                        this.chambersFired++;
+                        this.currentChamber++;
+                        
+                        message.innerHTML = `<div class="safe">✓ CLICK... You're safe!</div>
+                                           <div>Chambers remaining: ${this.chambers - this.currentChamber}</div>`;
+                        
+                        if (this.currentChamber >= this.chambers) {
+                            // Survived the round
+                            this.round++;
+                            this.totalRounds++;
+                            message.innerHTML = `<div class="safe">🎉 ROUND ${this.round - 1} SURVIVED! 🎉</div>
+                                               <div>Starting new round...</div>`;
+                            
+                            setTimeout(() => {
+                                document.getElementById('spinBtn').disabled = false;
+                                document.getElementById('fireBtn').disabled = true;
+                                message.textContent = 'New round! Spin the cylinder to continue...';
+                            }, 2000);
+                        } else {
+                            fireBtn.disabled = false;
+                        }
+                    }
+                    
+                    this.updateStats();
+                }, 500);
+            }
+
+            updateStats() {
+                document.getElementById('round').textContent = this.round;
+                document.getElementById('chambersFired').textContent = this.chambersFired;
+                
+                const survivalRate = this.totalRounds > 0 ? 
+                    Math.round((this.totalRounds / (this.totalRounds + (this.gameOver ? 1 : 0))) * 100) : 100;
+                document.getElementById('survivalRate').textContent = survivalRate + '%';
+            }
+
+            resetGame() {
+                this.chambers = 6;
+                this.bulletPosition = -1;
+                this.currentChamber = 0;
+                this.round = 1;
+                this.chambersFired = 0;
+                this.gameOver = false;
+
+                document.getElementById('spinBtn').disabled = false;
+                document.getElementById('fireBtn').disabled = true;
+                document.getElementById('resetBtn').style.background = '';
+                document.getElementById('message').textContent = 
+                    'Click "SPIN CYLINDER" to load a bullet randomly, then pull the trigger...';
+
+                // Clear bullet indicators
+                document.querySelectorAll('.chamber').forEach(chamber => {
+                    chamber.classList.remove('loaded');
+                });
+
+                this.updateStats();
+                
+                // Reset sound
+                this.playSound(400, 0.3, 'triangle');
+            }
         }
 
-        function reset() {
-            bulletChamber = 0;
-            currentChamber = 1;
-            gameActive = false;
-            
-            document.getElementById('spinBtn').disabled = false;
-            document.getElementById('fireBtn').disabled = true;
-            document.getElementById('chamber').textContent = currentChamber;
-            document.getElementById('message').textContent = 'Click "Spin" to load the gun, then "Fire" to test your luck!';
+        // Initialize game
+        const game = new RussianRouletteGame();
+
+        // Global functions for HTML onclick
+        function spinCylinder() {
+            game.spinCylinder();
         }
 
-        function updateStats() {
-            document.getElementById('shots').textContent = shotsFired;
-            document.getElementById('games').textContent = gamesPlayed;
+        function pullTrigger() {
+            game.pullTrigger();
         }
+
+        function resetGame() {
+            game.resetGame();
+        }
+
+        // Initialize audio context on first user interaction
+        document.addEventListener('click', function initAudioContext() {
+            if (game.audioContext && game.audioContext.state === 'suspended') {
+                game.audioContext.resume();
+            }
+        }, { once: true });
+
+        // Add dramatic click effects
+        document.getElementById('revolver').addEventListener('click', function() {
+            if (!document.getElementById('fireBtn').disabled) {
+                pullTrigger();
+            } else if (!document.getElementById('spinBtn').disabled) {
+                spinCylinder();
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case ' ': // Spacebar
+                case 'Enter':
+                    e.preventDefault();
+                    if (!document.getElementById('fireBtn').disabled) {
+                        pullTrigger();
+                    }
+                    break;
+                case 's':
+                case 'S':
+                    if (!document.getElementById('spinBtn').disabled) {
+                        spinCylinder();
+                    }
+                    break;
+                case 'r':
+                case 'R':
+                    resetGame();
+                    break;
+            }
+        });
+
+        // Add tension with periodic messages
+        setInterval(() => {
+            if (!game.gameOver && document.getElementById('fireBtn').disabled === false) {
+                const tensionMessages = [
+                    "Your heart is pounding...",
+                    "The weight of destiny in your hands...",
+                    "One pull could end it all...",
+                    "Do you hear that? It's your heartbeat...",
+                    "The cylinder waits silently...",
+                    "Fortune favors the bold... or does it?"
+                ];
+                
+                if (Math.random() < 0.3) { // 30% chance every 3 seconds
+                    const currentMsg = document.getElementById('message').innerHTML;
+                    const randomMsg = tensionMessages[Math.floor(Math.random() * tensionMessages.length)];
+                    
+                    document.getElementById('message').innerHTML = `<em style="color: #ff8a65;">${randomMsg}</em>`;
+                    
+                    setTimeout(() => {
+                        if (document.getElementById('message').innerHTML.includes(randomMsg)) {
+                            document.getElementById('message').innerHTML = currentMsg;
+                        }
+                    }, 2000);
+                }
+            }
+        }, 3000);
     </script>
 </body>
 </html>
