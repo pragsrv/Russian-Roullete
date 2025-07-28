@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian Roulette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #2c1810;
+            color: #d4c5b0;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .game-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #3d2a1a;
+            border: 3px solid #8b6914;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #cc3333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .revolver {
+            width: 150px;
+            height: 100px;
+            background: #654321;
+            border-radius: 10px;
+            margin: 20px auto;
+            position: relative;
+            border: 2px solid #8b6914;
+        }
+
+        .cylinder {
+            width: 50px;
+            height: 50px;
+            background: #543a2a;
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            border: 2px solid #8b6914;
+        }
+
+        .barrel {
+            width: 60px;
+            height: 20px;
+            background: #654321;
+            position: absolute;
+            top: 40px;
+            right: -10px;
+            border: 1px solid #8b6914;
+        }
+
+        .info {
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+
+        .chamber-count {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        button {
+            font-size: 1.1rem;
+            padding: 12px 25px;
+            margin: 10px;
+            background: #654321;
+            color: #d4c5b0;
+            border: 2px solid #8b6914;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #8b6914;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .fire-btn {
+            background: #cc3333;
+            color: white;
+            font-weight: bold;
+        }
+
+        .fire-btn:hover {
+            background: #aa2222;
+        }
+
+        .message {
+            margin: 20px 0;
+            font-size: 1.2rem;
+            min-height: 30px;
+        }
+
+        .safe {
+            color: #44cc44;
+        }
+
+        .dead {
+            color: #cc3333;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2c1810;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Russian Roulette</h1>
+        
+        <div class="revolver">
+            <div class="cylinder"></div>
+            <div class="barrel"></div>
+        </div>
+
+        <div class="info">
+            Chamber: <span class="chamber-count" id="chamber">1</span> / 6
+        </div>
+
+        <div class="message" id="message">
+            Click "Spin" to load the gun, then "Fire" to test your luck!
+        </div>
+
+        <button id="spinBtn" onclick="spin()">Spin Cylinder</button>
+        <button id="fireBtn" class="fire-btn" onclick="fire()" disabled>Fire!</button>
+        <button onclick="reset()">New Game</button>
+
+        <div class="stats">
+            <div>Shots Fired: <span id="shots">0</span></div>
+            <div>Games Played: <span id="games">0</span></div>
+        </div>
+    </div>
+
+    <script>
+        let bulletChamber = 0;
+        let currentChamber = 1;
+        let shotsFired = 0;
+        let gamesPlayed = 0;
+        let gameActive = false;
+
+        function spin() {
+            // Randomly place bullet in one of 6 chambers
+            bulletChamber = Math.floor(Math.random() * 6) + 1;
+            currentChamber = 1;
+            gameActive = true;
+            
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('fireBtn').disabled = false;
+            document.getElementById('chamber').textContent = currentChamber;
+            document.getElementById('message').textContent = 'Cylinder spun... Pull the trigger when ready.';
+        }
+
+        function fire() {
+            if (!gameActive) return;
+
+            if (currentChamber === bulletChamber) {
+                // Hit the bullet - game over
+                document.getElementById('message').innerHTML = '<div class="dead">💀 BANG! You\'re dead!</div>';
+                gameActive = false;
+                gamesPlayed++;
+                document.getElementById('spinBtn').disabled = false;
+                document.getElementById('fireBtn').disabled = true;
+            } else {
+                // Empty chamber - safe
+                document.getElementById('message').innerHTML = '<div class="safe">Click... You\'re safe!</div>';
+                currentChamber++;
+                
+                if (currentChamber > 6) {
+                    // Survived all chambers
+                    document.getElementById('message').innerHTML = '<div class="safe">🎉 You survived the round!</div>';
+                    gameActive = false;
+                    gamesPlayed++;
+                    document.getElementById('spinBtn').disabled = false;
+                    document.getElementById('fireBtn').disabled = true;
+                } else {
+                    document.getElementById('chamber').textContent = currentChamber;
+                }
+            }
+            
+            shotsFired++;
+            updateStats();
+        }
+
+        function reset() {
+            bulletChamber = 0;
+            currentChamber = 1;
+            gameActive = false;
+            
+            document.getElementById('spinBtn').disabled = false;
+            document.getElementById('fireBtn').disabled = true;
+            document.getElementById('chamber').textContent = currentChamber;
+            document.getElementById('message').textContent = 'Click "Spin" to load the gun, then "Fire" to test your luck!';
+        }
+
+        function updateStats() {
+            document.getElementById('shots').textContent = shotsFired;
+            document.getElementById('games').textContent = gamesPlayed;
+        }
+    </script>
+</body>
+</html>
