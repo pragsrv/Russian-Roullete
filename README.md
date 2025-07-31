@@ -2,6 +2,11 @@
 
 A fun and interactive **Russian Roulette** game built using only **HTML**, **CSS**, and **JavaScript** — all within a single file. No frameworks, no libraries, just pure web magic.
 
+> This project was built by also taking help of Claude AI and Perplexity and ChatGPT to cnvert the normal game to the 3d structured game
+
+![20250731-2010-38 1235755-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/a3377422-5c3a-4808-aade-c4f7043c9141)
+
+
 ## 🎮 How to Play
 
 - Click the **"Spin"** button to spin the chamber.
@@ -22,9 +27,9 @@ A fun and interactive **Russian Roulette** game built using only **HTML**, **CSS
 - JavaScript (Vanilla)
 
 ## 📁 Usage
-
+```bash
 1. Clone the repository:
-   ```bash
+   
    git clone https://github.com/pragsrv/Russian-Roullete.git
 ````
 
